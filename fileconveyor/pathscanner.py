@@ -95,7 +95,6 @@ class PathScanner(object):
                             is_dir = not os.path.islink(path_to_file)
                 else:
                     is_dir = False
-                print "IS_DIR:", is_dir
                 row = (path, filename, mtime, is_dir)
             except os.error:
                 continue
