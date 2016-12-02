@@ -9,8 +9,8 @@ import logging
 
 RESTART_AFTER_UNHANDLED_EXCEPTION = True
 RESTART_INTERVAL = 10
-LOG_FILE = './fileconveyor.log'
-PID_FILE = '~/.fileconveyor.pid'
+LOG_FILE = '/var/log/fileconveyor/fileconveyor.log'
+PID_FILE = '/var/run/fileconveyor/fileconveyor.pid'
 PERSISTENT_DATA_DB = './persistent_data.db'
 SYNCED_FILES_DB = './synced_files.db'
 WORKING_DIR = '/tmp/fileconveyor'
@@ -23,4 +23,4 @@ CALLBACKS_CONSOLE_OUTPUT = False
 CONSOLE_LOGGER_LEVEL = logging.WARNING
 FILE_LOGGER_LEVEL = logging.INFO
 RETRY_INTERVAL = 30
-FOLLOW_SYMLINKS = False
+FOLLOW_SYMLINKS = True
