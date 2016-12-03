@@ -3,17 +3,17 @@ Installation process
 The installation process is as installing `git` and `pip`, after which you
 will only need to perform a single command:
 
-    pip install -e git+https://github.com/wimleers/fileconveyor@master#egg=fileconveyor
+    pip install -e git+https://github.com/piotrs-kainos/fileconveyor@master#egg=fileconveyor
 
 This automatically also installs all Python dependencies.
 However, some processors also require non-Python dependencies. For details on
 those, please see below.
 
 
-Notes: 
+Notes:
 - Make sure you've got Python 2.5 (or newer) installed. If you've got an older
   version, you can install Python 2.5 next to it.
-- 
+-
 - Installing `pip`: http://www.pip-installer.org/en/latest/installing.html; or
     curl http://python-distribute.org/distribute_setup.py | python
     curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python

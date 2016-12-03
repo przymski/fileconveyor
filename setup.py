@@ -8,7 +8,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-VERSION = '0.4-dev'
+VERSION = '0.5-dev'
 
 
 def read_relative_file(filename):
@@ -23,7 +23,7 @@ setup(
     name='fileconveyor',
     version=VERSION,
     url='http://fileconveyor.org',
-    download_url='https://github.com/wimleers/fileconveyor',
+    download_url='https://github.com/piotrs-kainos/fileconveyor',
     author='Wim Leers',
     license='Unlicense',
     description="Daemon to detect, process and sync files to CDNs.",
