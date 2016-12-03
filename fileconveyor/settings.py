@@ -7,7 +7,7 @@ __license__ = "GPL"
 import logging
 
 
-RESTART_AFTER_UNHANDLED_EXCEPTION = True
+RESTART_AFTER_UNHANDLED_EXCEPTION = False
 RESTART_INTERVAL = 10
 LOG_FILE = '/var/log/fileconveyor/fileconveyor.log'
 PID_FILE = '/var/run/fileconveyor/fileconveyor.pid'
