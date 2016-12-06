@@ -29,22 +29,22 @@ setup(
     description="Daemon to detect, process and sync files to CDNs.",
     long_description=read_relative_file('README.txt'),
     platforms='Any',
-    classifiers = [
+    classifiers=[
         'Development Status :: 4 - Beta',
         'License :: Public Domain',
         'Operating System :: OS Independent',
     ],
     packages=find_packages(),
-    include_package_data = True,
+    include_package_data=True,
     install_requires=[
-        'setuptools',
-        'cssutils',
-        'boto==2.38.0',
-        'python-cloudfiles>=1.4.0',
-        'django>=1.3',
-        'django-cumulus>=1.0.10',
+        'setuptools==0.9.8',
+        'cssutils==1.0.1',
+        'boto==2.42.0',
+        'python-cloudfiles==1.7.11',
+        'Django==1.9.8',
+        'django-cumulus==1.0.19',
         'django-storages==1.1.5'
     ] + (
-        ["pyinotify>0.8.0"] if "linux" in sys.platform else []
+        ["pyinotify==0.9.6"] if "linux" in sys.platform else []
     ),
 )
