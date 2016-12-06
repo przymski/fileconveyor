@@ -232,7 +232,11 @@ class Arbitrator(threading.Thread):
         pipelined_items = []
         for item in self.files_in_pipeline:
             pipelined_items.append(item)
-            self.pipeline_queue.put(item)
+            try:
+                self.pipeline_queue.put(item)
+            except AlreadyExists:
+                pipelined_items.remove(item)
+                self.logger.warning("Pipeline item already exists in queue: %s" % item)
         for item in pipelined_items:
             self.files_in_pipeline.remove(item)
         self.logger.warning("Setup: moved %d items from the 'files_in_pipeline' persistent list into the 'pipeline' persistent queue." % (num_files_in_pipeline))
@@ -867,7 +871,11 @@ class Arbitrator(threading.Thread):
             while processed < QUEUE_PROCESS_BATCH_SIZE and processed < len(self.failed_files):
                 item = self.failed_files[processed]
                 failed_items.append(item)
-                self.pipeline_queue.put(item)
+                try:
+                    self.pipeline_queue.put(item)
+                except AlreadyExists:
+                    failed_items.remove(item)
+                    self.logger.warning("Pipeline item already exists in queue: %s" % item)
                 processed += 1
 
             for item in failed_items:
