@@ -8,7 +8,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-VERSION = '0.5-dev'
+VERSION = '0.6-dev'
 
 
 def read_relative_file(filename):
@@ -23,7 +23,7 @@ setup(
     name='fileconveyor',
     version=VERSION,
     url='http://fileconveyor.org',
-    download_url='https://github.com/piotrs-kainos/fileconveyor',
+    download_url='https://github.com/przymski/fileconveyor',
     author='Wim Leers',
     license='Unlicense',
     description="Daemon to detect, process and sync files to CDNs.",
@@ -39,11 +39,11 @@ setup(
     install_requires=[
         'setuptools==0.9.8',
         'cssutils==1.0.1',
-        'boto==2.42.0',
+        'boto3==1.11.5,
         'python-cloudfiles==1.7.11',
         'Django==1.9.8',
         'django-cumulus==1.0.19',
-        'django-storages==1.1.5'
+        'django-storages==1.6'
     ] + (
         ["pyinotify==0.9.6"] if "linux" in sys.platform else []
     ),
