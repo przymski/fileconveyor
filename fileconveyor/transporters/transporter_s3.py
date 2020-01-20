@@ -6,11 +6,11 @@ TRANSPORTER_CLASS = "TransporterS3"
 
 class TransporterS3(Transporter):
     name = 'S3'
-    valid_settings = ImmutableSet(["access_key_id", "secret_access_key", "bucket_name", "bucket_prefix", "bucket_access"])
+    valid_settings = ImmutableSet(["bucket_name", "bucket_prefix", "bucket_access"])
     required_settings = ImmutableSet(["bucket_name"])
     headers = {
-        'Expires':       'Tue, 20 Jan 2037 03:00:00 GMT', # UNIX timestamps will stop working somewhere in 2038.
-        'CacheControl':  'max-age=315360000',             # Cache for 10 years.
+        'Expires':       'Tue, 20 Jan 2037 03:00:00 GMT',  # UNIX timestamps will stop working somewhere in 2038.
+        'CacheControl':  'max-age=315360000',              # Cache for 10 years.
     }
 
     def __init__(self, settings, callback, error_callback, parent_logger=None):

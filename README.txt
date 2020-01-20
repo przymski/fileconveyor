@@ -310,8 +310,6 @@ Transporter: Amazon S3
 Value to enter: "s3".
 
 Available settings:
-- access_key_id
-- secret_access_key
 - bucket_name
 - bucket_prefix
 
