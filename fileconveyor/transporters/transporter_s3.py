@@ -1,22 +1,18 @@
 from transporter import *
-from storages.backends.s3boto import S3BotoStorage
-
+from storages.backends.s3boto3 import S3Boto3Storage
 
 TRANSPORTER_CLASS = "TransporterS3"
 
 
 class TransporterS3(Transporter):
-
-
-    name              = 'S3'
-    valid_settings    = ImmutableSet(["access_key_id", "secret_access_key", "bucket_name", "bucket_prefix", "bucket_access"])
-    required_settings = ImmutableSet(["access_key_id", "secret_access_key", "bucket_name"])
+    name = 'S3'
+    valid_settings = ImmutableSet(["access_key_id", "secret_access_key", "bucket_name", "bucket_prefix", "bucket_access"])
+    required_settings = ImmutableSet(["bucket_name"])
     headers = {
         'Expires':       'Tue, 20 Jan 2037 03:00:00 GMT', # UNIX timestamps will stop working somewhere in 2038.
-        'Cache-Control': 'max-age=315360000',             # Cache for 10 years.
-        'Vary' :         'Accept-Encoding',               # Ensure S3 content can be accessed from behind proxies.
+        'CacheControl':  'max-age=315360000',             # Cache for 10 years.
+        'Vary':          'Accept-Encoding',               # Ensure S3 content can be accessed from behind proxies.
     }
-
 
     def __init__(self, settings, callback, error_callback, parent_logger=None):
         Transporter.__init__(self, settings, callback, error_callback, parent_logger)
@@ -30,14 +26,25 @@ class TransporterS3(Transporter):
             self.settings["bucket_access"] = "private"
 
         # Map the settings to the format expected by S3Storage.
-        try:
-            self.storage = S3BotoStorage(
-                self.settings["bucket_name"].encode('utf-8'),
-                self.settings["access_key_id"].encode('utf-8'),
-                self.settings["secret_access_key"].encode('utf-8'),
-                self.settings["bucket_access"].encode('utf-8'),
-                self.settings["bucket_access"].encode('utf-8'),
-                self.__class__.headers
-            )
-        except Exception, e:
-            raise ConnectionError(e)
+        if "access_key_id" in configured_settings and "secret_access_key" in configured_settings:
+            try:
+                self.storage = S3Boto3Storage(
+                    self.settings["bucket_name"].encode('utf-8'),
+                    self.settings["access_key_id"].encode('utf-8'),
+                    self.settings["secret_access_key"].encode('utf-8'),
+                    self.settings["bucket_access"].encode('utf-8'),
+                    self.settings["bucket_access"].encode('utf-8'),
+                    self.__class__.headers
+                )
+            except Exception, e:
+                raise ConnectionError(e)
+        else:
+            try:
+                self.storage = S3Boto3Storage(
+                    self.settings["bucket_name"].encode('utf-8'),
+                    self.settings["bucket_access"].encode('utf-8'),
+                    self.settings["bucket_access"].encode('utf-8'),
+                    self.__class__.headers
+                )
+            except Exception, e:
+                raise ConnectionError(e)
