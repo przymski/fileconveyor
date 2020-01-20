@@ -39,7 +39,7 @@ setup(
     install_requires=[
         'setuptools==0.9.8',
         'cssutils==1.0.1',
-        'boto3==1.11.5,
+        'boto3==1.11.5',
         'python-cloudfiles==1.7.11',
         'Django==1.9.8',
         'django-cumulus==1.0.19',
