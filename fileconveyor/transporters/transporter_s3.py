@@ -11,7 +11,6 @@ class TransporterS3(Transporter):
     headers = {
         'Expires':       'Tue, 20 Jan 2037 03:00:00 GMT', # UNIX timestamps will stop working somewhere in 2038.
         'CacheControl':  'max-age=315360000',             # Cache for 10 years.
-        'Vary':          'Accept-Encoding',               # Ensure S3 content can be accessed from behind proxies.
     }
 
     def __init__(self, settings, callback, error_callback, parent_logger=None):
@@ -26,25 +25,11 @@ class TransporterS3(Transporter):
             self.settings["bucket_access"] = "private"
 
         # Map the settings to the format expected by S3Storage.
-        if "access_key_id" in configured_settings and "secret_access_key" in configured_settings:
-            try:
-                self.storage = S3Boto3Storage(
-                    self.settings["bucket_name"].encode('utf-8'),
-                    self.settings["access_key_id"].encode('utf-8'),
-                    self.settings["secret_access_key"].encode('utf-8'),
-                    self.settings["bucket_access"].encode('utf-8'),
-                    self.settings["bucket_access"].encode('utf-8'),
-                    self.__class__.headers
-                )
-            except Exception, e:
-                raise ConnectionError(e)
-        else:
-            try:
-                self.storage = S3Boto3Storage(
-                    self.settings["bucket_name"].encode('utf-8'),
-                    self.settings["bucket_access"].encode('utf-8'),
-                    self.settings["bucket_access"].encode('utf-8'),
-                    self.__class__.headers
-                )
-            except Exception, e:
-                raise ConnectionError(e)
+        try:
+            self.storage = S3Boto3Storage(
+                bucket=self.settings["bucket_name"].encode('utf-8'),
+                bucket_acl=self.settings["bucket_access"].encode('utf-8'),
+                object_parameters=self.__class__.headers
+            )
+        except Exception, e:
+            raise ConnectionError(e)
